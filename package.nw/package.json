@@ -1,0 +1,9 @@
+{
+	"name": "norlit-ide",
+	"main": "index.html",
+	"window": {
+		"toolbar": false,
+		"icon": "img/icon.png"
+	},
+	"single-instance": false
+}

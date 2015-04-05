@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<!--
+ TODO List
+ Charset -> under consideration
+ Theme/Font/Mode setting -> under consideration
+ -->
+<head>
+	<meta charset="utf-8" />
+    <title>Norlit IDE</title>
+    <link rel="stylesheet" href="css/library/NorlitLayout.css"/>
+    <script src="js/library/NorlitWebFramework.js"></script>
+
+	<script src="js/library/NWF-Resize.js"></script>
+	<script src="js/library/NWF-Observer.js"></script>
+	<script src="js/library/NWF-Glasspane.js"></script>
+	<script src="js/library/NWF-Resizable.js"></script>
+    <script src="js/library/NWF-Layout.js"></script>
+    <script src="js/library/NWF-Tabs.js"></script>
+    <script src="js/library/NWF-Dialog.js"></script>
+    <script src="js/library/NWF-Sortable.js"></script>
+
+    <script src="js/library/NWF-Hotkey.js"></script>
+    <script src="js/library/FileDialog.js"></script>
+
+    <script src="ace/ace.js"></script>
+    <script src="ace-addon/mode-norlit.js"></script>
+
+    <style type="text/css">
+    	body {
+    		overflow: hidden;
+    	}
+	    #editor { 
+	    	z-index: 0;
+	    }
+	    #command {
+	    	display: none;
+	    	background: rgb(85, 85, 85);
+	    	height: 100px;
+	    	min-height: 60px;
+	    	max-height: 300px;
+	    	font-family: consolas;
+	    }
+
+	    #command input {
+	    	position: absolute;
+	    	
+	    	box-sizing: border-box;
+	    	font-family: inherit;
+	    	background: #e6e6e6;
+
+	    	padding-left: 3px;
+			border: 1px #3f3f3f solid;
+
+	    	left: 5px;
+	    	bottom: 5px;
+	    	height: 23px;
+	    	width: calc(100% - 10px);
+	    }
+
+	    #command input:focus {
+	    	outline: none;
+	    }
+
+	    #command #output {
+	    	position: absolute;
+	    	
+			tab-size: 2;
+
+	    	background: #e6e6e6;
+
+	    	overflow: auto;
+
+	    	border: 1px #3f3f3f solid;
+	    	padding: 3px;
+	    	margin: 0px;
+
+	    	top: 5px;
+	    	left: 5px;
+	    	right: 5px;
+	    	bottom: 33px;
+	    }
+	</style>
+
+</head>
+<body nwf-layout="border">
+<div id="tabs" nwf-role="tab-bar" nwf-position="north"></div>
+<div id="editor" nwf-position="center"></div>
+<div id="command" nwf-position="south">
+	<pre id="output"></pre>
+	<input/>
+	<div role="resize-bar" resize-direction="north" resize-target="#command"></div>
+</div>
+
+<script>
+var editor = ace.edit("editor");
+editor.setTheme("ace/theme/monokai");
+editor.setOptions({
+  fontSize: "12pt"
+});
+editor.$blockScrolling = Infinity;
+
+/* scrollbar-corner fix for ace */
+$('.ace_scrollbar').on('style', function(){
+	if($('.ace_scrollbar-h').css('display')!=='none'&&$('.ace_scrollbar-v').css('display')!=='none'){
+		$('.norlit-scrollbar-corner').show();
+	}else{
+		$('.norlit-scrollbar-corner').hide();
+	}
+});
+$(editor.container).append($('<div class="norlit-scrollbar-corner" style="display: none;">'));
+
+/* ace resize listener */
+$(editor.container).resize(function(){
+	editor.resize();
+});
+
+$('[role=resize-bar]').resizable();
+
+</script>
+
+<script src="js/ContextMenu.js"></script>
+<script src="js/MenuBar.js"></script>
+<script src="js/Editor.js"></script>
+
+</body>
+</html>
